@@ -8,15 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleViewHolder>
-        implements ItemClickListener {
+public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleViewHolder> implements ItemClickListener {
     private final Context context;
-    private List<Girl> items;
+    private List<Cliente> items;
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
@@ -40,7 +38,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
         }
     }
 
-    public SimpleAdapter(Context context, List<Girl> items) {
+    public SimpleAdapter(Context context, List<Cliente> items) {
         this.context = context;
         this.items = items;
     }
@@ -59,7 +57,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
 
     @Override
     public void onBindViewHolder(SimpleViewHolder viewHolder, int i) {
-        Girl currentItem = items.get(i);
+        Cliente currentItem = items.get(i);
         viewHolder.nombre.setText(currentItem.getName());
         Glide.with(viewHolder.avatar.getContext())
                 .load(currentItem.getIdDrawable())
@@ -75,8 +73,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
      */
     @Override
     public void onItemClick(View view, int position) {
-        DetailActivity.createInstance(
-                (Activity) context, items.get(position));
+        DetailActivity.createInstance((Activity) context, items.get(position));
     }
 
 

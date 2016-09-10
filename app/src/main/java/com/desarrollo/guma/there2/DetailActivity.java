@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.desarrollo.guma.core.Clientes;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -21,12 +22,12 @@ public class DetailActivity extends AppCompatActivity {
     private static final String EXTRA_NAME = "com.desarrollo.guma.there2.name";
     private static final String EXTRA_DRAWABLE = "com.desarrollo.guma.there2.drawable";
 
-    public static void createInstance(Activity activity, Girl title) {
+    public static void createInstance(Activity activity, Cliente title) {
         Intent intent = getLaunchIntent(activity, title);
         activity.startActivity(intent);
     }
 
-    public static Intent getLaunchIntent(Context context, Girl girl) {
+    public static Intent getLaunchIntent(Context context, Cliente girl) {
         Intent intent = new Intent(context, DetailActivity.class);
         intent.putExtra(EXTRA_NAME, girl.getName());
         intent.putExtra(EXTRA_DRAWABLE, girl.getIdDrawable());

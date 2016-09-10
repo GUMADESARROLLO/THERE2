@@ -4,17 +4,17 @@ import java.util.Random;
 /**
  * POJO de chicas
  */
-public class Girl {
+public class Cliente {
 
     private String name;
     private int idDrawable;
 
-    public Girl(String name, int idDrawable) {
+    public Cliente(String name, int idDrawable) {
         this.name = name;
         this.idDrawable = idDrawable;
     }
 
-    public Girl(String name) {
+    public Cliente(String name) {
         this.name = name;
         this.idDrawable = getRandomGirlDrawable();
     }

@@ -1,6 +1,7 @@
 package com.desarrollo.guma.there2;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.desarrollo.guma.core.Clientes;
+
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,7 +28,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setToolbar();
 
-        SimpleAdapter adaptador = new SimpleAdapter(this, Girls.randomList(30));
+        for(Clientes obj : Clientes.getCliente(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, this)) {
+            //childRows.add(new ChildRow(obj.getNombre()));
+        }
+
+        SimpleAdapter adaptador = new SimpleAdapter(this, objClientes.randomList(30));
         recycler = (RecyclerView) findViewById(R.id.reciclador);
         recycler.setHasFixedSize(true);
         lManager = new LinearLayoutManager(this);
