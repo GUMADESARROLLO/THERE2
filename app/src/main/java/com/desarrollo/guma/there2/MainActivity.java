@@ -3,32 +3,23 @@ package com.desarrollo.guma.there2;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.Snackbar;
+
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.SearchView;
-import android.util.Log;
 
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
-
-import com.desarrollo.guma.core.Clientes;
-
-import java.io.File;
-
 
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener,SearchView.OnCloseListener{
     private MenuItem searchItem;
     private android.widget.SearchView searchView;
     private SearchManager searchManager;
-    private static final String TAG = "MainActivity";
     private RecyclerView recycler;
     private LinearLayoutManager lManager;
     private CollapsingToolbarLayout collapser;
@@ -39,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setToolbar();
+        setTitle("Clientes");
 
         searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         adaptador = new SimpleAdapter(this, objClientes.List(MainActivity.this));
@@ -71,18 +63,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.action_search:
-                //showSnackBar("Comenzar a buscar...");
-                return true;
             case R.id.action_out:
                 finish();
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-    private void showSnackBar(String msg) {
-        Snackbar.make(findViewById(R.id.coordinator), msg, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
@@ -92,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-
         return false;
     }
 

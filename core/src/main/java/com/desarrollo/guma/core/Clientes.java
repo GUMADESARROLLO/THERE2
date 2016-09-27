@@ -11,19 +11,15 @@ import java.util.List;
  * Created by marangelo.php on 10/09/2016.
  */
 public class Clientes {
-    private String Nombre;
-    private  String Dir;
-    private  String cod;
-
-
-
-
+    private String Nombre,Dir,cod;
 
     public Clientes(String nombre,String Codigo,String Direccion) {
         Dir = Direccion;
         cod = Codigo;
         Nombre = nombre;
     }
+
+
     public Clientes() {
         super();
     }
@@ -52,7 +48,6 @@ public class Clientes {
             Cursor cursor = myDataBase.rawQuery("SELECT * FROM CLIENTES", null);
 
             if(cursor.getCount() > 0) {
-
                 cursor.moveToFirst();
                 while(!cursor.isAfterLast()) {
                     Clientes tmp = new Clientes();

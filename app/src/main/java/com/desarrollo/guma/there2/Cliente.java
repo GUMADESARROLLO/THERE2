@@ -4,9 +4,7 @@ package com.desarrollo.guma.there2;
 
 public class Cliente {
 
-    private String name;
-    private String cod;
-    private String dir;
+    private String cod,name,dir;
     private int idDrawable;
 
     public Cliente(String name, String Codigo, String Direccion) {

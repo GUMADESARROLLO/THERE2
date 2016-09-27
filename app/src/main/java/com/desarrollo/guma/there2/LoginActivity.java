@@ -1,6 +1,7 @@
 package com.desarrollo.guma.there2;
 import android.content.Intent;
 import android.os.Environment;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -33,11 +34,15 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(new Intent(LoginActivity.this,MainActivity.class));
                     finish();
                 }else{
-                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                    finish();
+                    showSnackBar();
+                    //startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                    //finish();
                 }
 
             }
         });
+    }
+    private void showSnackBar() {
+        Toast.makeText(this, "Usuario Incorrcto", Toast.LENGTH_SHORT).show();
     }
 }

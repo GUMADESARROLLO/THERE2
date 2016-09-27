@@ -20,18 +20,13 @@ import java.util.List;
 public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleViewHolder> implements ItemClickListener {
     private final Context context;
     private List<Cliente> items;
-    private static final String TAG = "SimpleAdapter";
-
-
     public List<Cliente> getFilter(String query) {
         List<Cliente> newitems = new ArrayList<>();
         query = query.toLowerCase();
         if (query.isEmpty()){
            newitems.addAll(items);
         }else{
-
             for(Cliente obj : items) {
-
                 if (obj.getName().toLowerCase().contains(query)){
                     newitems.add(new Cliente(obj.getName(),obj.getCod(),obj.getDir()));
                 }
