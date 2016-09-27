@@ -7,16 +7,11 @@
 
     <string name="title_activity_detail">DetailActivity</string>
 
-    <string name="girl_ipsum">
-        Morbi posuere lorem nec elit dapibus, vitae accumsan mauris pellentesque.
-        Vestibulum a lobortis mi. Vestibulum lacinia molestie semper. Pellentesque
-        ultrices arcu lacus, interdum mollis nibh convallis ut. Aliquam sagittis
-        sem a lacus gravida, eu accumsan purus volutpat. Donec tempus, est id
-        tristique consectetur, lacus ligula dignissim turpis, cursus commodo turpis
-        libero in purus. Phasellus tempus gravida tempor.
-    </string>
+
     <string name="action_search">Buscar</string>
     <string name="label_edt_login_agente">Agente</string>
     <string name="label_edt_login_pass">Contraseña</string>
     <string name="btn_login">Acceder</string>
+    <string name="app_label">Buscador</string>
+    <string name="search_hint">Buscar Cliente</string>
 </resources>

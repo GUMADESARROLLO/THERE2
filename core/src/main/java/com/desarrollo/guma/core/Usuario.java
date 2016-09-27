@@ -39,7 +39,7 @@ public class Usuario {
         try {
             myDbHelper = new SQLiteHelper(basedir, context);
             myDataBase = myDbHelper.getReadableDatabase();
-            Cursor cursor = myDataBase.rawQuery("select * from USUARIOS where CREDENCIAL='"+Usuario+"' and PASSWORD='"+PASSWORD+"' ", null);
+            Cursor cursor = myDataBase.rawQuery("select * from Usuarios where IdVendedor='"+Usuario+"' and PASSWORD='"+PASSWORD+"' ", null);
             if(cursor.getCount() > 0) {
                 Correcto = true;
                 cursor.moveToFirst();

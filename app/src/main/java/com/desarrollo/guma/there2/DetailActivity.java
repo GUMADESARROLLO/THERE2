@@ -12,14 +12,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.desarrollo.guma.core.Clientes;
 
 public class DetailActivity extends AppCompatActivity {
+    private static TextView codcls,dircls;
 
-
+    private static final String EXTRA_COD = "com.desarrollo.guma.there2.cod";
     private static final String EXTRA_NAME = "com.desarrollo.guma.there2.name";
+    private static final String EXTRA_DIR = "com.desarrollo.guma.there2.DIR";
     private static final String EXTRA_DRAWABLE = "com.desarrollo.guma.there2.drawable";
 
     public static void createInstance(Activity activity, Cliente title) {
@@ -29,7 +33,9 @@ public class DetailActivity extends AppCompatActivity {
 
     public static Intent getLaunchIntent(Context context, Cliente girl) {
         Intent intent = new Intent(context, DetailActivity.class);
+        intent.putExtra(EXTRA_COD, girl.getCod());
         intent.putExtra(EXTRA_NAME, girl.getName());
+        intent.putExtra(EXTRA_DIR, girl.getDir());
         intent.putExtra(EXTRA_DRAWABLE, girl.getIdDrawable());
         return intent;
     }
@@ -39,12 +45,17 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        setToolbar();// Añadir action bar
-        if (getSupportActionBar() != null) // Habilitar up button
+        setToolbar();
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        codcls = (TextView) findViewById(R.id.codCliente);
+        dircls = (TextView) findViewById(R.id.dirCliente);
 
         Intent i = getIntent();
         String name = i.getStringExtra(EXTRA_NAME);
+        codcls.setText(i.getStringExtra(EXTRA_COD));
+        dircls.setText(i.getStringExtra(EXTRA_DIR));
         int idDrawable = i.getIntExtra(EXTRA_DRAWABLE, -1);
 
         CollapsingToolbarLayout collapser = (CollapsingToolbarLayout) findViewById(R.id.collapser);

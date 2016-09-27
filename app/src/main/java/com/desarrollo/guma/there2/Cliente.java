@@ -1,57 +1,34 @@
 package com.desarrollo.guma.there2;
-import java.util.Random;
 
-/**
- * POJO de chicas
- */
+
+
 public class Cliente {
 
     private String name;
+    private String cod;
+    private String dir;
     private int idDrawable;
 
-    public Cliente(String name, int idDrawable) {
+    public Cliente(String name, String Codigo, String Direccion) {
+        this.cod  = Codigo;
         this.name = name;
-        this.idDrawable = idDrawable;
-    }
-
-    public Cliente(String name) {
-        this.name = name;
-        this.idDrawable = getRandomGirlDrawable();
+        this.dir  = Direccion;
+        this.idDrawable = R.drawable.fondo;
     }
 
     public String getName() {
         return name;
     }
-
+    public String getCod() {
+        return cod;
+    }
+    public String getDir() {
+        return dir;
+    }
     public int getIdDrawable() {
         return idDrawable;
     }
 
-    /**
-     * Asigna un drawable en forma aleatoria
-     *
-     * @return id del drawable
-     */
-    private int getRandomGirlDrawable() {
-        Random rnd = new Random();
-        switch (rnd.nextInt(8)) {
-            default:
-            case 0:
-                return R.drawable.girl1;
-            case 1:
-                return R.drawable.girl2;
-            case 2:
-                return R.drawable.girl3;
-            case 3:
-                return R.drawable.girl4;
-            case 4:
-                return R.drawable.girl5;
-            case 5:
-                return R.drawable.girl6;
-            case 6:
-                return R.drawable.girl7;
-            case 7:
-                return R.drawable.girl8;
-        }
-    }
+
+
 }

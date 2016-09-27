@@ -12,8 +12,16 @@ import java.util.List;
  */
 public class Clientes {
     private String Nombre;
+    private  String Dir;
+    private  String cod;
 
-    public Clientes(String nombre) {
+
+
+
+
+    public Clientes(String nombre,String Codigo,String Direccion) {
+        Dir = Direccion;
+        cod = Codigo;
         Nombre = nombre;
     }
     public Clientes() {
@@ -23,11 +31,15 @@ public class Clientes {
     public String getNombre() {
         return Nombre;
     }
-
     public void setNombre(String nombre) {
         Nombre = nombre;
     }
-
+    public String getCod() {return cod;}
+    public void setCod(String cod) {
+        this.cod = cod;
+    }
+    public String getDir() {return Dir;}
+    public void setDir(String dir) {Dir = dir;}
 
     public static List<Clientes> getCliente(String basedir, Context context) {
         List<Clientes> lista = new ArrayList<>();
@@ -44,7 +56,9 @@ public class Clientes {
                 cursor.moveToFirst();
                 while(!cursor.isAfterLast()) {
                     Clientes tmp = new Clientes();
-                    tmp.setNombre(cursor.getString(cursor.getColumnIndex("Nombre")));
+                    tmp.setNombre(cursor.getString(cursor.getColumnIndex("NOMBRE")));
+                    tmp.setCod(cursor.getString(cursor.getColumnIndex("CLIENTE")));
+                    tmp.setDir(cursor.getString(cursor.getColumnIndex("DIRECCION")));
                     lista.add(tmp);
                     cursor.moveToNext();
                 }
