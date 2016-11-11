@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -20,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,23 +29,49 @@ import com.bumptech.glide.Glide;
 import com.desarrollo.guma.core.Clientes;
 import com.desarrollo.guma.core.Usuario;
 
-public class DetailActivity extends AppCompatActivity {
-    private static TextView codcls,dircls,latitud,longitud;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
+public class DetailActivity extends AppCompatActivity {
 
     private static final String EXTRA_COD = "com.desarrollo.guma.there2.cod";
     private static final String EXTRA_NAME = "com.desarrollo.guma.there2.name";
 
     private static final String EXTRA_DIR = "com.desarrollo.guma.there2.DIR";
     private static final String EXTRA_DRAWABLE = "com.desarrollo.guma.there2.drawable";
-    AlertDialog alert = null;
-    LocationManager locationManager;
-    Location location;
-    LocationListener locationListener;
+
+    ListView lst;
+    SpecialAdapter adapter;
+    List<HashMap<String, String>> fillMaps;
 
     public static void createInstance(Activity activity, Cliente title) {
         Intent intent = getLaunchIntent(activity, title);
         activity.startActivity(intent);
+
+    }
+    private void loadData(){
+        String[] from = new String[] {"cmp1", "cmp2", "cmp3","cmp4","cmp5"};
+        int[] to = new int[] { R.id.cl1, R.id.cl2, R.id.cl3,R.id.cl4,R.id.cl5};
+
+        fillMaps = new ArrayList<HashMap<String, String>>();
+
+
+        for (int i=0; i < 10; i++){
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("cmp1", String.valueOf(i));
+            map.put("cmp2", "0");
+            map.put("cmp3", "0");
+            map.put("cmp4", "0");
+            map.put("cmp5", "0");
+            fillMaps.add(map);
+
+        }
+
+
+
+        adapter = new SpecialAdapter(DetailActivity.this, fillMaps, R.layout.tabla_facturas_puntos, from, to);
+        lst.setAdapter(adapter);
     }
 
     public static Intent getLaunchIntent(Context context, Cliente girl) {
@@ -65,105 +93,24 @@ public class DetailActivity extends AppCompatActivity {
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        codcls = (TextView) findViewById(R.id.codCliente);
-        dircls = (TextView) findViewById(R.id.dirCliente);
-        latitud = (TextView) findViewById(R.id.campo_lati);
-        longitud = (TextView) findViewById(R.id.campo_long);
 
         Intent i = getIntent();
         final String name = i.getStringExtra(EXTRA_NAME);
-        codcls.setText(i.getStringExtra(EXTRA_COD));
-        dircls.setText(i.getStringExtra(EXTRA_DIR));
         int idDrawable = i.getIntExtra(EXTRA_DRAWABLE, -1);
+        //int idDrawable =  R.drawable.welcome;
+        lst = (ListView) findViewById(R.id.listview_DRecibo);
 
 
 
         CollapsingToolbarLayout collapser = (CollapsingToolbarLayout) findViewById(R.id.collapser);
         collapser.setTitle(name);
         loadImageParallax(idDrawable);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showSnackBar("CODVENDEDOR: " + tmp.getCred() + "NOMBRE VENDEDOR: " + tmp.getNombre() + "CLIENTE: " + codcls.getText() + " NOMBRE: " + name + "LATI: " + latitud.getText() + "longi: "+ longitud.getText());
-
-                    }
-                }        );
-
-
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-        if ( !locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
-            AlertNoGps();
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-                return;
-            } else {
-                location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            }
-        } else {
-            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        }
-
-        MostrarLocalizacion(location);
-
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                MostrarLocalizacion(location);
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        };
-
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
+        loadData();
+       // FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
 
     }
-    public void MostrarLocalizacion(Location loc){
-        if (loc!=null){
-            latitud.setText(String.valueOf(loc.getLatitude()));
-            longitud.setText(String.valueOf(loc.getLongitude()));
-        }else{
 
-            showSnackBar("El Dispositivo no sea Triangulado");
-        }
-
-
-
-    }
-    private void AlertNoGps() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("El sistema GPS esta desactivado, ¿Desea activarlo?")
-                .setCancelable(false)
-                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        finish();
-                    }
-                });
-        alert = builder.create();
-        alert.show();
-    }
     private void setToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

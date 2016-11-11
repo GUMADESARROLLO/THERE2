@@ -2,6 +2,7 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/coordinator"
+    android:background="@color/UmaText"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
@@ -55,7 +56,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <!-- FAB -->
-    <android.support.design.widget.FloatingActionButton
+    <!--<android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="@dimen/size_fab"
         android:layout_height="@dimen/size_fab"
@@ -64,7 +65,8 @@
         app:borderWidth="0dp"
         app:elevation="4dp"
         app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|right|end" />
+        app:layout_anchorGravity="bottom|right|end" />-->
+
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/scroll"
@@ -79,134 +81,144 @@
             android:orientation="vertical"
             android:paddingTop="24dp">
 
-            <!-- Card Perfil -->
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/card_margin">
 
-                <LinearLayout
-                    style="@style/Widget.CardContent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <!--Etiqueta Perfil -->
-                    <TextView
-                        android:id="@+id/codCliente"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Codigo"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-                    <!--Texto de ejemplo-->
-                    <TextView
-                        android:id="@+id/dirCliente"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Direccion" />
-
-                </LinearLayout>
-
-
-
-            </android.support.v7.widget.CardView>
 
             <!-- Card Amigos -->
-            <android.support.v7.widget.CardView
+           <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="300dp"
                 android:layout_marginBottom="@dimen/card_margin"
                 android:layout_marginLeft="@dimen/card_margin"
                 android:layout_marginRight="@dimen/card_margin">
                 <RelativeLayout
                     android:padding="8dp"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                 <LinearLayout
+                    android:background="@color/PrimaryUma"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TextView
+                        android:textColor="@color/blanco"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:layout_weight="1.1"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:gravity="center_horizontal"
                         android:padding="10dp"
-                        android:text="Latitud: "
-                        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                        android:text="FACTURA"
                         android:layout_gravity="left"
                         />
                     <TextView
-                        android:id="@+id/campo_lati"
+                        android:textColor="@color/blanco"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:layout_weight="1.1"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:gravity="center_horizontal"
                         android:padding="10dp"
-                        android:text="0.0"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                        android:text="FECHA"
                         android:layout_gravity="left"
                         />
                     <TextView
+                        android:textColor="@color/blanco"
+                        android:layout_width="0dp"
+                        android:layout_weight="1.1"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:gravity="center_horizontal"
+                        android:padding="10dp"
+                        android:text="ACUMULADO"
+                        android:layout_gravity="left"
+                        />
+                    <TextView
+                        android:textColor="@color/blanco"
+                        android:layout_width="0dp"
+                        android:layout_weight="1.1"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:gravity="center_horizontal"
+                        android:padding="10dp"
+                        android:text="DISPONIBLE"
+                        android:layout_gravity="left"
+                        />
+                    <TextView
+                        android:textColor="@color/blanco"
+                        android:layout_width="0dp"
+                        android:layout_weight="1.1"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:gravity="center_horizontal"
+                        android:padding="10dp"
+                        android:text="VENCE"
+                        android:layout_gravity="left"
+                        />
 
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:gravity="center_horizontal"
-                        android:padding="10dp"
-                        android:text="Longitud"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                        android:layout_gravity="left"
-                        />
-                    <TextView
-                        android:id="@+id/campo_long"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:gravity="center_horizontal"
-                        android:padding="10dp"
-                        android:text="0.0"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                        android:layout_gravity="left"
-                        />
+
                 </LinearLayout>
+                    <View android:layout_width="fill_parent"
+                        android:layout_height="1dip"
+                        android:background="?android:attr/listDivider" />
+                    <LinearLayout
+                        android:layout_marginTop="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent">
+                        <ListView android:id="@+id/listview_DRecibo"
+                            android:layout_marginTop="17dp"
+                            android:layout_height="fill_parent"
+                            android:layout_width="fill_parent">
+                        </ListView>
+
+                    </LinearLayout>
+
                 </RelativeLayout>
 
 
             </android.support.v7.widget.CardView>
 
-            <!-- Card Intereses -->
             <android.support.v7.widget.CardView
-                android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginBottom="@dimen/card_margin"
                 android:layout_marginLeft="@dimen/card_margin"
                 android:layout_marginRight="@dimen/card_margin">
-
                 <LinearLayout
-                    style="@style/Widget.CardContent"
+                    android:background="@color/PrimaryUma"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <!-- Etiqueta Intereses -->
+                    android:layout_height="match_parent">
                     <TextView
-                        android:layout_width="match_parent"
+                        android:textColor="@color/umalert"
+                        android:layout_width="0dp"
+                        android:layout_weight="1.1"
                         android:layout_height="wrap_content"
-                        android:text="Intereses"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                    <!-- Texto de ejemplo -->
+                        android:textStyle="bold"
+                        android:gravity="center_horizontal"
+                        android:padding="10dp"
+                        android:text="ACUMULADO: 0 PTS"
+                        android:layout_gravity="left"
+                        />
                     <TextView
-                        android:layout_width="match_parent"
+                        android:textColor="@color/umalert"
+                        android:layout_width="0dp"
+                        android:layout_weight="1.1"
                         android:layout_height="wrap_content"
-                        android:text="Contenido" />
-
+                        android:textStyle="bold"
+                        android:gravity="center_horizontal"
+                        android:padding="10dp"
+                        android:text="DISPONIBLE: 0 PTS"
+                        android:layout_gravity="left"
+                        />
                 </LinearLayout>
-
             </android.support.v7.widget.CardView>
+
+
+
+
+
+
+
 
         </LinearLayout>
 

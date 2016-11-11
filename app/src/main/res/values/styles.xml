@@ -7,7 +7,7 @@
         <item name="windowNoTitle">true</item>
 
         <!--Colores-->
-        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimary">@color/PrimaryUma</item>
         <item name="colorPrimaryDark">@color/darkPrimaryColor</item>
         <item name="colorAccent">@color/accentColor</item>
     </style>

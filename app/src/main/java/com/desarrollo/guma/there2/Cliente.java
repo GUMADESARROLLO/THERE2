@@ -11,7 +11,7 @@ public class Cliente {
         this.cod  = Codigo;
         this.name = name;
         this.dir  = Direccion;
-        this.idDrawable = R.drawable.fondo;
+        this.idDrawable = R.drawable.logouma;
     }
 
     public String getName() {

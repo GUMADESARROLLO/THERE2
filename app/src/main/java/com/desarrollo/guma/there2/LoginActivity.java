@@ -20,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login_uma);
         final TextView txtUsurio = (TextView) findViewById(R.id.edtAgente);
         final TextView txtPass = (TextView) findViewById(R.id.edtPass);
         findViewById(R.id.btnOK).setOnClickListener(new View.OnClickListener() {
