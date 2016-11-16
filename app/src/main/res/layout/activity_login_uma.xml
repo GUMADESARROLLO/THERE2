@@ -25,9 +25,9 @@
 
 
         <ImageView
-            android:layout_width="match_parent"
+            android:layout_width="100dp"
             android:layout_height="100dp"
-            android:background="@drawable/animales"
+            android:background="@drawable/avatar"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
             android:id="@+id/imageView" />
