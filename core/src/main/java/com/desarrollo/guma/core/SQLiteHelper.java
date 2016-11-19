@@ -44,7 +44,6 @@ public final class SQLiteHelper extends SQLiteOpenHelper
         SQLiteDatabase checkDB;
         try
         {
-            Log.d("OKOKOKOKOKO",path.concat(DATABASE));
             checkDB = SQLiteDatabase.openDatabase(path.concat(DATABASE), null, flag);
         }
         catch (Exception e) { checkDB = null; }
@@ -52,29 +51,7 @@ public final class SQLiteHelper extends SQLiteOpenHelper
         if (ok) { checkDB.close(); }
         return ok;
     }
-    public boolean insertDatos(String CLIENTE, String DATOS)
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String Facturas[]= DATOS.split("xxx");
 
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("CLIENTE", CLIENTE);
-        contentValues.put("FACTURA", Facturas[0]);
-        contentValues.put("FECHA", Facturas[1]);
-        contentValues.put("ACUMULADO", Facturas[2]);
-        contentValues.put("DISPONIBLE", Facturas[3]);
-        contentValues.put("VENCE", Facturas[4]);
-        long result = db.insert("DETALLE_FACTURA_PUNTOS",null,contentValues);
-        if (result == -1) { return false; }
-        else { return  true; }
-    }
-    public Cursor GetFacturasCliente(String Id)//Obtener los Datos del Cliente Deseado
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String Query = "SELECT * FROM DETALLE_FACTURA_PUNTOS WHERE CLIENTE= '"+Id.trim()+"'  "; //+ '"+Id.trim()+"';
-        Cursor res = db.rawQuery(Query, null);
-        return res;
-    }
     @Override
     public void onCreate(SQLiteDatabase db) { }
     
