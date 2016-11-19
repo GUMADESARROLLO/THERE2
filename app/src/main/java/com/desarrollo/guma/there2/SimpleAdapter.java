@@ -81,6 +81,8 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
         Glide.with(viewHolder.avatar.getContext()).load(currentItem.getIdDrawable()).centerCrop().into(viewHolder.avatar);
     }
     @Override
-    public void onItemClick(View view, int position) { DetailActivity.createInstance((Activity) context, items.get(position)); }
+    public void onItemClick(View view, int position) {
+        DetailActivity.createInstance((Activity) context, items.get(position));
+    }
 }
 interface ItemClickListener { void onItemClick(View view, int position); }
