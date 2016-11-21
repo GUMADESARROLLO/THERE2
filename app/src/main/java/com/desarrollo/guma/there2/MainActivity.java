@@ -3,8 +3,10 @@ package com.desarrollo.guma.there2;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +40,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private RecyclerView recycler;
     private LinearLayoutManager lManager;
     private SimpleAdapter adaptador;
+    private boolean checked;
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
 
 
     SpecialAdapter adapter2;
@@ -50,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         setContentView(R.layout.activity_main);
         setToolbar();
         setTitle("Clientes");
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+        checked = preferences.getBoolean("pref",false);
         searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         adaptador = new SimpleAdapter(this, objClientes.List(MainActivity.this));
         recycler = (RecyclerView) findViewById(R.id.reciclador);
@@ -74,11 +82,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
                         JSONArray jsonArray = new JSONArray(new String(responseBody));
 
-                        //Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, cxnt,"DELETE FROM CLIENTES;");
+                        Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, cxnt,"DELETE FROM CLIENTES;");
+                        Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, cxnt,"DELETE FROM DETALLE_FACTURA_PUNTOS;");
+
                         Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, cxnt,jsonArray.getJSONObject(0).getString("CLIENTES"));
-
-
-                        //Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, cxnt,"DELETE FROM DETALLE_FACTURA_PUNTOS;");
                         Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, cxnt,jsonArray.getJSONObject(0).getString("FACTURAS"));
 
 
@@ -131,6 +138,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         switch (id)
         {
             case R.id.action_out:
+                checked = !checked;
+                editor.putBoolean("pref", checked);
+                editor.apply();
                 finish();
                 return true;
         }

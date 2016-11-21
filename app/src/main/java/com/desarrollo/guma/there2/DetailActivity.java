@@ -77,12 +77,11 @@ public class DetailActivity extends AppCompatActivity
         int ACUMULADOR=0,DISPONIBLE=0;
 
         for (int i=0; i<fillMaps.size(); i++){
-            //Log.d("XXXXXXXXXXXXX", "loadData: " + fillMaps.get(i));
-            //ACUMULADOR += Integer.parseInt(fillMaps.get(i).get("ACUMULADO"));
-            //DISPONIBLE += Integer.parseInt(fillMaps.get(i).get("DISPONIBLE"));
+            ACUMULADOR += Integer.parseInt(fillMaps.get(i).get("ACUMULADO"));
+            DISPONIBLE += Integer.parseInt(fillMaps.get(i).get("DISPONIBLE"));
         }
-        //txtDisp.setText( "DISPONIBLE: " + String.valueOf(DISPONIBLE) + " PTS" );
-        //txtAcumu.setText( "ACUMULADO: " + String.valueOf(ACUMULADOR) + " PTS" );
+        txtDisp.setText( "DISPONIBLE: " + String.valueOf(DISPONIBLE) + " PTS" );
+        txtAcumu.setText( "ACUMULADO: " + String.valueOf(ACUMULADOR) + " PTS" );
 
         SpecialAdapter adapter = new SpecialAdapter(DetailActivity.this, fillMaps, R.layout.tabla_facturas_puntos, from, to);
 
@@ -114,7 +113,7 @@ public class DetailActivity extends AppCompatActivity
         lst = (ListView) findViewById(R.id.listview_DRecibo);
         CollapsingToolbarLayout collapser = (CollapsingToolbarLayout) findViewById(R.id.collapser);
         collapser.setTitle(name);
-        loadImageParallax(idDrawable);
+        loadImageParallax(R.drawable.portada);
         txtAcumu = (TextView) findViewById(R.id.txtAcumulado);
         txtDisp = (TextView) findViewById(R.id.txtDisponible);
         loadData(CODE);
