@@ -35,20 +35,40 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public static boolean leerDB(String Usuario, String PASSWORD,String basedir, Context context){
+    public Cursor InfoUsuario(String basedir, Context context)
+    {
+        SQLiteDatabase myDataBase = null;
+        SQLiteHelper myDbHelper = null;
+        Cursor res=null;
+        try
+        {
+            myDbHelper = new SQLiteHelper(basedir, context);
+            myDataBase = myDbHelper.getReadableDatabase();
+            String Query = "SELECT * FROM Usuarios";
+            res = myDataBase.rawQuery(Query ,null);
+        }
+        catch (Exception e) { e.printStackTrace(); }
+        return res;
+    }
+
+    public static boolean leerDB(String Usuario, String PASSWORD,String basedir, Context context)
+    {
         boolean Correcto=false;
         SQLiteDatabase myDataBase = null;
         SQLiteHelper myDbHelper = null;
-        try {
+        try
+        {
             myDbHelper = new SQLiteHelper(basedir, context);
             myDataBase = myDbHelper.getReadableDatabase();
             Log.d("CORE:USUARIO", "leerDB: " + "select * from Usuarios where Credencial='"+Usuario+"' and PASSWORD='"+PASSWORD+"' ");
             Cursor cursor = myDataBase.rawQuery("select * from Usuarios where Credencial='"+Usuario+"' and PASSWORD='"+PASSWORD+"' ", null);
-            if(cursor.getCount() > 0) {
+            if(cursor.getCount() > 0)
+            {
                 Correcto = true;
                 cursor.moveToFirst();
                 int i=0;
-                while(!cursor.isAfterLast()) {
+                while(!cursor.isAfterLast())
+                {
                     /*Clientes tmp = new Clientes();
                     tmp.setIdVendedor(cursor.getString(cursor.getColumnIndex("IdVendedor")));
                     tmp.setNameVendedor(cursor.getString(cursor.getColumnIndex("NombreUsuario")));*/
@@ -56,15 +76,12 @@ public class Usuario {
 
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if(myDataBase != null) {
-                myDataBase.close();
-            }
-            if(myDbHelper != null) {
-                myDbHelper.close();
-            }
+        }
+        catch (Exception e) { e.printStackTrace(); }
+        finally
+        {
+            if(myDataBase != null) { myDataBase.close(); }
+            if(myDbHelper != null) { myDbHelper.close(); }
         }
         return Correcto;
     }
