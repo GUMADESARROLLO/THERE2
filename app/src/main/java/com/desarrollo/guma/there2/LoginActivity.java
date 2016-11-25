@@ -1,9 +1,13 @@
 package com.desarrollo.guma.there2;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -11,7 +15,20 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.desarrollo.guma.core.Clientes;
 import com.desarrollo.guma.core.Usuario;
+
+//import com.loopj.android.http.*;
+//import com.loopj.android.http.AsyncHttpClient;
+//import com.loopj.android.http.AsyncHttpResponseHandler;
+//import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.File;
 
@@ -21,6 +38,9 @@ public class LoginActivity extends AppCompatActivity
     private boolean checked;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
+
+    SpecialAdapter adapter2;
+    ProgressDialog pdialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -46,14 +66,135 @@ public class LoginActivity extends AppCompatActivity
                         {
                             checked = !checked;
                             editor.putBoolean("pref", checked);
+                            //editor.putString("usuario","11");
+                            Cursor res = tmp.InfoUsuario(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator,
+                                    LoginActivity.this);
+
+                            if (res.getCount()!=0)
+
+                            {
+                                if (res.moveToFirst())
+                                {
+                                    editor.putString("usuario",res.getString(0).toString());
+
+                                }
+                            }
                             editor.apply();
 
                             startActivity(new Intent(LoginActivity.this,MainActivity.class));
                             finish();
                         }
-                      else
+                        else
                         {
-                            showSnackBar();
+                            //showSnackBar();
+                            AsyncHttpClient servicio = new AsyncHttpClient();
+                            //AsyncHttpClient servicio = new AsyncHttpClient();
+                            RequestParams parametros = new RequestParams();
+                            parametros.put("V",txtUsurio.getText().toString());
+                            parametros.put("P",txtPass.getText().toString());
+
+                            servicio.post(ClssURL.getURL_VENDEDOR(), parametros, new AsyncHttpResponseHandler()
+                            {
+                                @Override
+                                public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
+                                    boolean ok = false;
+                                    String Qry;
+                                    if (statusCode==200)
+                                    {
+                                        try
+                                        {
+                                            JSONObject jsonObject = new JSONObject(new String(responseBody));
+
+                                            Qry = "INSERT INTO Usuarios (IdVendedor, NombreUsuario, Credencial, Password) VALUES("+jsonObject.get("VENDEDOR").toString()+", '"+jsonObject.get("NOMBRE").toString()+"', '"+txtUsurio.getText().toString()+"', '"+txtPass.getText().toString()+"')";
+                                            Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, LoginActivity.this,"DELETE FROM Usuarios;");
+                                            Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, LoginActivity.this, Qry);
+
+                                            checked = !checked;
+                                            editor.putBoolean("pref", checked);
+                                            editor.putString("usuario",jsonObject.get("VENDEDOR").toString());
+                                            editor.commit();
+                                            editor.apply();
+
+                                            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                                            finish();
+
+                                            //pdialog.dismiss();
+                                            //Toast.makeText(LoginActivity.this, "Todo Bien", Toast.LENGTH_SHORT).show();
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            //e.printStackTrace();
+                                            pdialog.dismiss();
+                                            adapter2.notifyDataSetChanged();
+                                            Error404("Error de Actualización de Datos de Puntos de Facturas.");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        pdialog.dismiss();
+                                        adapter2.notifyDataSetChanged();
+                                        Error404("Error de Actualización de Datos de Puntos de Facturas.");
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody, Throwable error)
+                                {
+                                    Error404("onFailure");
+                                }
+                                /*@Override
+                                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                    boolean ok = false;
+                                    String Vendedor, Nombre, Contrasenna, Qry;
+                                    if (statusCode==200)
+                                    {
+                                        try
+                                        {
+                                            JSONObject jsonObject = new JSONObject(new String(responseBody));
+
+                                            //Vendedor    = jsonObject.get("VENDEDOR").toString();
+                                            //Nombre      = jsonObject.get("NOMBRE").toString();
+                                            //Contrasenna = jsonObject.get("CONTRASENNA").toString();
+
+                                            Qry = "INSERT INTO Usuarios (IdVendedor, NombreUsuario, Credencial, Password) VALUES("+jsonObject.get("VENDEDOR").toString()+", '"+jsonObject.get("NOMBRE").toString()+"', '"+txtUsurio.getText().toString()+"', '"+txtPass.getText().toString()+"')";
+                                            Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, LoginActivity.this,"DELETE FROM Usuarios;");
+                                            Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, LoginActivity.this, Qry);
+
+                                            checked = !checked;
+                                            editor.putBoolean("pref", checked);
+                                            editor.putString("usuario",jsonObject.get("VENDEDOR").toString());
+                                            editor.commit();
+                                            editor.apply();
+
+                                            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                                            finish();
+
+                                            //pdialog.dismiss();
+                                            //Toast.makeText(LoginActivity.this, "Todo Bien", Toast.LENGTH_SHORT).show();
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            //e.printStackTrace();
+                                            pdialog.dismiss();
+                                            adapter2.notifyDataSetChanged();
+                                            Error404("Error de Actualización de Datos de Puntos de Facturas.");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        pdialog.dismiss();
+                                        adapter2.notifyDataSetChanged();
+                                        Error404("Error de Actualización de Datos de Puntos de Facturas.");
+                                    }
+                                }
+                                */
+                                /*@Override
+                                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error)
+                                {
+                                    Error404("onFailure");
+                                }
+                                */
+                            });
                             //startActivity(new Intent(LoginActivity.this,MainActivity.class));
                             //finish();
                         }
@@ -66,4 +207,14 @@ public class LoginActivity extends AppCompatActivity
         }
     }
     private void showSnackBar() {Toast.makeText(this, "Usuario Incorrcto", Toast.LENGTH_SHORT).show(); }
+
+    public void Error404(String TipoError)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(TipoError)
+                .setNegativeButton("OK",null)
+                .create()
+                .show();
+    }
+
 }

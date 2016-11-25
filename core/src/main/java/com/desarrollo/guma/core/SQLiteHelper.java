@@ -40,7 +40,7 @@ public final class SQLiteHelper extends SQLiteOpenHelper
         }
     }
     private boolean checkDataBase()
-        {
+    {
         SQLiteDatabase checkDB;
         try
         {

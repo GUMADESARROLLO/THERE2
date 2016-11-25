@@ -15,6 +15,7 @@ import java.util.List;
 public class Clientes
 {
     private String Nombre,Dir,cod;
+
     public Clientes(String nombre,String Codigo,String Direccion)
     {
         Dir = Direccion;

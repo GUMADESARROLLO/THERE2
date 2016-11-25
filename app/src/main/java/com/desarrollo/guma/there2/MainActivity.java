@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 
 import com.desarrollo.guma.core.Clientes;
+import com.loopj.android.http.*;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -55,27 +56,41 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         setContentView(R.layout.activity_main);
         setToolbar();
         setTitle("Clientes");
+
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
         checked = preferences.getBoolean("pref",false);
         searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+
+        String Vendedor = preferences.getString("usuario","11");
+
+        //getClientes(this);
+
+        getClientes(this, Vendedor);
         adaptador = new SimpleAdapter(this, objClientes.List(MainActivity.this));
         recycler = (RecyclerView) findViewById(R.id.reciclador);
         recycler.setHasFixedSize(true);
         lManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(lManager);
-        recycler.setAdapter(adaptador);
+        adaptador.notifyDataSetChanged();
 
-        getClientes(this);
+        recycler.setAdapter(null);
+       // recycler.setAdapter(adaptador);
 
     }
-    public void getClientes(final Context cxnt){
+
+    public void getClientes(final Context cxnt, String User)
+    {
         AsyncHttpClient servicio = new AsyncHttpClient();
         RequestParams parametros = new RequestParams();
-        parametros.put("V",11);
-        servicio.post(ClssURL.getURL_CLENTES(), parametros, new AsyncHttpResponseHandler() {
+        //parametros.put("V",11);
+        parametros.put("V",User);
+
+        servicio.post(ClssURL.getURL_CLENTES(), parametros, new AsyncHttpResponseHandler()
+        {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody)
+            {
                 if (statusCode==200){
 
                     try{
@@ -88,40 +103,83 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                         Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, cxnt,jsonArray.getJSONObject(0).getString("CLIENTES"));
                         Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, cxnt,jsonArray.getJSONObject(0).getString("FACTURAS"));
 
+                        pdialog.dismiss();
+                        Toast.makeText(cxnt, "Todo Bien", Toast.LENGTH_SHORT).show();
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+                else
+                {
+                    pdialog.dismiss();
+                    adapter2.notifyDataSetChanged();
+                    Error404("Error de Actualización de Datos de Puntos de Facturas.");
+                }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody, Throwable error) {
+                Error404("onFailure");
+
+            }
+        /*    @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody)
+            {
+                if (statusCode==200){
+
+                    try{
+
+                        JSONArray jsonArray = new JSONArray(new String(responseBody));
+
+                        Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, cxnt,"DELETE FROM CLIENTES;");
+                        Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, cxnt,"DELETE FROM DETALLE_FACTURA_PUNTOS;");
+
+                        Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, cxnt,jsonArray.getJSONObject(0).getString("CLIENTES"));
+                        Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, cxnt,jsonArray.getJSONObject(0).getString("FACTURAS"));
 
                         pdialog.dismiss();
                         Toast.makeText(cxnt, "Todo Bien", Toast.LENGTH_SHORT).show();
-                    }catch (Exception e){
+                    }
+                    catch (Exception e)
+                    {
                         e.printStackTrace();
                     }
-
-                }else{
+                }
+                else
+                {
                     pdialog.dismiss();
                     adapter2.notifyDataSetChanged();
                     Error404("Error de Actualización de Datos de Puntos de Facturas.");
                 }
             }
+*/
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+            /*@Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error)
+            {
                 Error404("onFailure");
-            }
+            }*/
         });
     }
-
-    public void Error404(String TipoError){
+    public void Error404(String TipoError)
+    {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(TipoError)
                 .setNegativeButton("OK",null)
                 .create()
                 .show();
     }
-    private void setToolbar(){
+    private void setToolbar()
+    {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         searchItem = menu.findItem(R.id.action_search);
         searchView = (android.widget.SearchView) MenuItemCompat.getActionView(searchItem);
@@ -133,13 +191,16 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         return true;
     }
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         int id = item.getItemId();
         switch (id)
         {
             case R.id.action_out:
                 checked = !checked;
                 editor.putBoolean("pref", checked);
+                editor.putString("usuario","00");
+                editor.commit();
                 editor.apply();
                 finish();
                 return true;
