@@ -72,7 +72,7 @@ public class DetailActivity extends AppCompatActivity
         String[] from = new String[] {"FACTURA", "FECHA", "ACUMULADO","DISPONIBLE"};
         int[] to = new int[] { R.id.cl1, R.id.cl2, R.id.cl3,R.id.cl4};
         List<HashMap<String, String>> fillMaps = new ArrayList<HashMap<String, String>>();
-        fillMaps = Clientes.getFacturas(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, this,CD);
+        fillMaps = Clientes.getFacturas(ClssURL.getDIR_DB(), this,CD);
 
         int ACUMULADOR=0,DISPONIBLE=0;
         String LastUpdate = null;
@@ -88,7 +88,6 @@ public class DetailActivity extends AppCompatActivity
         txtLstD.setText("Ultima Actualización por el Usuario, " + LastUpdate);
 
         SpecialAdapter adapter = new SpecialAdapter(DetailActivity.this, fillMaps, R.layout.tabla_facturas_puntos, from, to);
-
         lst.setAdapter(adapter);
     }
     public static Intent getLaunchIntent(Context context, Cliente girl)

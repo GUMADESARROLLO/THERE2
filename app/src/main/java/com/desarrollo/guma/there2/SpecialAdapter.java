@@ -13,7 +13,6 @@ import java.util.List;
  */
 
 public class SpecialAdapter extends android.widget.SimpleAdapter {
-    //private int[] colors = new int[] { 0x30ffffff, Color.parseColor("#FFDDEFF5")};
     private int[] colors = new int[] { 0x30ffffff, 0x30ffffff};
     public SpecialAdapter(Context context, List<HashMap<String, String>> items, int resource, String[] from, int[] to) {
         super(context, items, resource, from, to);

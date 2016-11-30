@@ -98,13 +98,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
                 if (statusCode==200){
 
-                    Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, cxnt,"DELETE FROM CLIENTES;");
-                    Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, cxnt,"DELETE FROM DETALLE_FACTURA_PUNTOS;");
+                    Clientes.ExecuteSQL(ClssURL.getDIR_DB(), cxnt,"DELETE FROM CLIENTES;");
+                    Clientes.ExecuteSQL(ClssURL.getDIR_DB(), cxnt,"DELETE FROM DETALLE_FACTURA_PUNTOS;");
 
                     try{
                         JSONArray jsonArray = new JSONArray(new String(responseBody));
-                        Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, cxnt,jsonArray.getJSONObject(0).getString("CLIENTES"));
-                        Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, cxnt,jsonArray.getJSONObject(0).getString("FACTURAS"));
+                        Clientes.ExecuteSQL(ClssURL.getDIR_DB(), cxnt,jsonArray.getJSONObject(0).getString("CLIENTES"));
+                        Clientes.ExecuteSQL(ClssURL.getDIR_DB(), cxnt,jsonArray.getJSONObject(0).getString("FACTURAS"));
                         pdialog.dismiss();
                         showSnackBar("Información Actualizada....");
                         recycler.setAdapter(new SimpleAdapter(cxnt, objClientes.List(MainActivity.this)));
