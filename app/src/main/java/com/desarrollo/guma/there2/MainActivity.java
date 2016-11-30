@@ -107,7 +107,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                         Clientes.ExecuteSQL(ClssURL.getDIR_DB(), cxnt,jsonArray.getJSONObject(0).getString("FACTURAS"));
                         pdialog.dismiss();
                         showSnackBar("Información Actualizada....");
-                        recycler.setAdapter(new SimpleAdapter(cxnt, objClientes.List(MainActivity.this)));
+                        adaptador = new SimpleAdapter(cxnt, objClientes.List(MainActivity.this));
+                        recycler.setAdapter(adaptador);
                     }catch (Exception e){
                         e.printStackTrace();
                     }
