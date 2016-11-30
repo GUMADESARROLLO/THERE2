@@ -102,7 +102,7 @@ public class Clientes
                     map.put("FECHA",  cursor.getString(cursor.getColumnIndex("FECHA")));
                     map.put("ACUMULADO",  cursor.getString(cursor.getColumnIndex("ACUMULADO")));
                     map.put("DISPONIBLE",  cursor.getString(cursor.getColumnIndex("DISPONIBLE")));
-                    map.put("VENCE",  cursor.getString(cursor.getColumnIndex("FECHA")));
+                    map.put("VENCE",  cursor.getString(cursor.getColumnIndex("VENCE")));
                     fillMaps.add(map);
                     cursor.moveToNext();
                 }

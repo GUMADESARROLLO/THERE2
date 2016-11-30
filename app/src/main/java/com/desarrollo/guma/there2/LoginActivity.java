@@ -92,9 +92,7 @@ public class LoginActivity extends AppCompatActivity
                             RequestParams parametros = new RequestParams();
                             parametros.put("V",txtUsurio.getText().toString());
                             parametros.put("P",txtPass.getText().toString());
-
-                            servicio.post(ClssURL.getURL_VENDEDOR(), parametros, new AsyncHttpResponseHandler()
-                            {
+                            servicio.post(ClssURL.getURL_VENDEDOR(), parametros, new AsyncHttpResponseHandler() {
                                 @Override
                                 public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
                                     boolean ok = false;
@@ -138,64 +136,13 @@ public class LoginActivity extends AppCompatActivity
                                 }
 
                                 @Override
-                                public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody, Throwable error)
-                                {
+                                public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody, Throwable error) {
                                     Error404("onFailure");
                                 }
-                                /*@Override
-                                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                    boolean ok = false;
-                                    String Vendedor, Nombre, Contrasenna, Qry;
-                                    if (statusCode==200)
-                                    {
-                                        try
-                                        {
-                                            JSONObject jsonObject = new JSONObject(new String(responseBody));
-
-                                            //Vendedor    = jsonObject.get("VENDEDOR").toString();
-                                            //Nombre      = jsonObject.get("NOMBRE").toString();
-                                            //Contrasenna = jsonObject.get("CONTRASENNA").toString();
-
-                                            Qry = "INSERT INTO Usuarios (IdVendedor, NombreUsuario, Credencial, Password) VALUES("+jsonObject.get("VENDEDOR").toString()+", '"+jsonObject.get("NOMBRE").toString()+"', '"+txtUsurio.getText().toString()+"', '"+txtPass.getText().toString()+"')";
-                                            Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, LoginActivity.this,"DELETE FROM Usuarios;");
-                                            Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, LoginActivity.this, Qry);
-
-                                            checked = !checked;
-                                            editor.putBoolean("pref", checked);
-                                            editor.putString("usuario",jsonObject.get("VENDEDOR").toString());
-                                            editor.commit();
-                                            editor.apply();
-
-                                            startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                                            finish();
-
-                                            //pdialog.dismiss();
-                                            //Toast.makeText(LoginActivity.this, "Todo Bien", Toast.LENGTH_SHORT).show();
-                                        }
-                                        catch (Exception e)
-                                        {
-                                            //e.printStackTrace();
-                                            pdialog.dismiss();
-                                            adapter2.notifyDataSetChanged();
-                                            Error404("Error de Actualización de Datos de Puntos de Facturas.");
-                                        }
-                                    }
-                                    else
-                                    {
-                                        pdialog.dismiss();
-                                        adapter2.notifyDataSetChanged();
-                                        Error404("Error de Actualización de Datos de Puntos de Facturas.");
-                                    }
-                                }
-                                */
-                                /*@Override
-                                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error)
-                                {
-                                    Error404("onFailure");
-                                }
-                                */
                             });
-                            //startActivity(new Intent(LoginActivity.this,MainActivity.class));
+
+
+                           //startActivity(new Intent(LoginActivity.this,MainActivity.class));
                             //finish();
                         }
                     }

@@ -14,7 +14,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * @author gerzon
+ * @author marangelo
  */
 public final class SQLiteHelper extends SQLiteOpenHelper
 {
