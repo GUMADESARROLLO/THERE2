@@ -60,7 +60,7 @@ public class DetailActivity extends AppCompatActivity
     private static final String EXTRA_DIR = "com.desarrollo.guma.there2.DIR";
     private static final String EXTRA_DRAWABLE = "com.desarrollo.guma.there2.drawable";
     ListView lst;
-    TextView txtDisp,txtAcumu;
+    TextView txtDisp,txtAcumu,txtLstD;
     public static void createInstance(Activity activity, Cliente title)
     {
         Intent intent = getLaunchIntent(activity, title);
@@ -69,22 +69,25 @@ public class DetailActivity extends AppCompatActivity
     }
     private void loadData(String CD)
     {
-        String[] from = new String[] {"FACTURA", "FECHA", "ACUMULADO","DISPONIBLE","VENCE"};
-        int[] to = new int[] { R.id.cl1, R.id.cl2, R.id.cl3,R.id.cl4,R.id.cl5};
+        String[] from = new String[] {"FACTURA", "FECHA", "ACUMULADO","DISPONIBLE"};
+        int[] to = new int[] { R.id.cl1, R.id.cl2, R.id.cl3,R.id.cl4};
         List<HashMap<String, String>> fillMaps = new ArrayList<HashMap<String, String>>();
-        fillMaps = Clientes.getFacturas(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, this,CD);
+        fillMaps = Clientes.getFacturas(ClssURL.getDIR_DB(), this,CD);
 
         int ACUMULADOR=0,DISPONIBLE=0;
+        String LastUpdate = null;
 
         for (int i=0; i<fillMaps.size(); i++){
             ACUMULADOR += Integer.parseInt(fillMaps.get(i).get("ACUMULADO"));
             DISPONIBLE += Integer.parseInt(fillMaps.get(i).get("DISPONIBLE"));
+            LastUpdate = fillMaps.get(i).get("VENCE");
+
         }
         txtDisp.setText( "DISPONIBLE: " + String.valueOf(DISPONIBLE) + " PTS" );
         txtAcumu.setText( "ACUMULADO: " + String.valueOf(ACUMULADOR) + " PTS" );
+        txtLstD.setText("Ultima Actualización por el Usuario, " + LastUpdate);
 
         SpecialAdapter adapter = new SpecialAdapter(DetailActivity.this, fillMaps, R.layout.tabla_facturas_puntos, from, to);
-
         lst.setAdapter(adapter);
     }
     public static Intent getLaunchIntent(Context context, Cliente girl)
@@ -109,9 +112,12 @@ public class DetailActivity extends AppCompatActivity
         Intent i = getIntent();
         final String name = i.getStringExtra(EXTRA_NAME);
         final String CODE = i.getStringExtra(EXTRA_COD);
+        final String Dt = i.getStringExtra("UltimaActualizacion");
         int idDrawable = i.getIntExtra(EXTRA_DRAWABLE, -1);
         lst = (ListView) findViewById(R.id.listview_DRecibo);
         CollapsingToolbarLayout collapser = (CollapsingToolbarLayout) findViewById(R.id.collapser);
+        txtLstD = (TextView) findViewById(R.id.txtLastUpdate);
+        txtLstD.setText("AQUI");
         collapser.setTitle(name);
         loadImageParallax(R.drawable.portada);
         txtAcumu = (TextView) findViewById(R.id.txtAcumulado);

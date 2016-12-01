@@ -9,6 +9,8 @@
 
 
     <string name="action_search">Buscar</string>
+    <string name="action_out">Salir</string>
+    <string name="action_update">Actualizar</string>
     <string name="label_edt_login_agente">Agente</string>
     <string name="label_edt_login_pass">Contraseña</string>
     <string name="btn_login">Acceder</string>

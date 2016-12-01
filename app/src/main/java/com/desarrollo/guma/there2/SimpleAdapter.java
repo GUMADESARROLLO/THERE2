@@ -23,8 +23,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
 {
     private final Context context;
     private List<Cliente> items;
-    public List<Cliente> getFilter(String query)
-    {
+    public List<Cliente> getFilter(String query){
         List<Cliente> newitems = new ArrayList<>();
         query = query.toLowerCase();
         if (query.isEmpty()){ newitems.addAll(items); }

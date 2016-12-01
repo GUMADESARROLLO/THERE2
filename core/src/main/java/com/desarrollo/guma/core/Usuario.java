@@ -20,21 +20,6 @@ public class Usuario {
         Cred = Credencial;
     }
 
-    public String getCred() {
-        return Cred;
-    }
-
-    public void setCred(String cred) {
-        Cred = cred;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     public Cursor InfoUsuario(String basedir, Context context)
     {
         SQLiteDatabase myDataBase = null;
@@ -60,18 +45,15 @@ public class Usuario {
         {
             myDbHelper = new SQLiteHelper(basedir, context);
             myDataBase = myDbHelper.getReadableDatabase();
-            Log.d("CORE:USUARIO", "leerDB: " + "select * from Usuarios where Credencial='"+Usuario+"' and PASSWORD='"+PASSWORD+"' ");
             Cursor cursor = myDataBase.rawQuery("select * from Usuarios where Credencial='"+Usuario+"' and PASSWORD='"+PASSWORD+"' ", null);
             if(cursor.getCount() > 0)
             {
                 Correcto = true;
                 cursor.moveToFirst();
-                int i=0;
+
                 while(!cursor.isAfterLast())
                 {
-                    /*Clientes tmp = new Clientes();
-                    tmp.setIdVendedor(cursor.getString(cursor.getColumnIndex("IdVendedor")));
-                    tmp.setNameVendedor(cursor.getString(cursor.getColumnIndex("NombreUsuario")));*/
+
                     cursor.moveToNext();
 
                 }

@@ -15,24 +15,18 @@ import java.util.List;
 public class Clientes
 {
     private String Nombre,Dir,cod;
-
-    public Clientes(String nombre,String Codigo,String Direccion)
-    {
+    public Clientes(String nombre,String Codigo,String Direccion){
         Dir = Direccion;
         cod = Codigo;
         Nombre = nombre;
     }
     public Clientes() { super(); }
-
     public String getNombre() { return Nombre; }
     public void setNombre(String nombre) { Nombre = nombre; }
-
     public String getCod() { return cod; }
     public void setCod(String cod) { this.cod = cod; }
-
     public String getDir() { return Dir; }
     public void setDir(String dir) { Dir = dir; }
-
     public static void ExecuteSQL(String basedir, Context context, String SQL){
         SQLiteDatabase myDataBase = null;
         SQLiteHelper myDbHelper = null;
@@ -50,9 +44,7 @@ public class Clientes
             if(myDbHelper != null) { myDbHelper.close(); }
         }
     }
-
-    public static List<Clientes> getCliente(String basedir, Context context)
-    {
+    public static List<Clientes> getCliente(String basedir, Context context){
         List<Clientes> lista = new ArrayList<>();
         SQLiteDatabase myDataBase = null;
         SQLiteHelper myDbHelper = null;
@@ -83,8 +75,7 @@ public class Clientes
         }
         return lista;
     }
-    public static  List<HashMap<String, String>> getFacturas(String basedir, Context context,String CLIENTE)
-    {
+    public static  List<HashMap<String, String>> getFacturas(String basedir, Context context,String CLIENTE){
         SQLiteDatabase myDataBase = null;
         SQLiteHelper myDbHelper = null;
         List<HashMap<String, String>> fillMaps = new ArrayList<HashMap<String, String>>();
@@ -102,7 +93,7 @@ public class Clientes
                     map.put("FECHA",  cursor.getString(cursor.getColumnIndex("FECHA")));
                     map.put("ACUMULADO",  cursor.getString(cursor.getColumnIndex("ACUMULADO")));
                     map.put("DISPONIBLE",  cursor.getString(cursor.getColumnIndex("DISPONIBLE")));
-                    map.put("VENCE",  cursor.getString(cursor.getColumnIndex("FECHA")));
+                    map.put("VENCE",  cursor.getString(cursor.getColumnIndex("VENCE")));
                     fillMaps.add(map);
                     cursor.moveToNext();
                 }

@@ -12,8 +12,15 @@
         app:showAsAction="ifRoom|collapseActionView"
         android:title="" />
     <item
+        android:id="@+id/action_update"
+        android:title="@string/action_update"
+        android:orderInCategory="2"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_autorenew_white_24dp"/>
+
+    <item
         android:id="@+id/action_out"
-        android:title="@string/action_search"
+        android:title="@string/action_out"
         android:orderInCategory="2"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_power_settings_new_white_24dp"/>

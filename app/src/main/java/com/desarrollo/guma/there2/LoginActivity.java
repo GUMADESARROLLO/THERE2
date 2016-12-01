@@ -59,45 +59,26 @@ public class LoginActivity extends AppCompatActivity
                     @Override
                     public void onClick(View v)
                     {
-                        if (tmp.leerDB(txtUsurio.getText().toString(),txtPass.getText().toString(),
-                            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator,
-                            LoginActivity.this)
-                           )
-                        {
+                        if (tmp.leerDB(txtUsurio.getText().toString(),txtPass.getText().toString(),ClssURL.getDIR_DB(),LoginActivity.this)){
                             checked = !checked;
                             editor.putBoolean("pref", checked);
-                            //editor.putString("usuario","11");
-                            Cursor res = tmp.InfoUsuario(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator,
-                                    LoginActivity.this);
-
-                            if (res.getCount()!=0)
-
-                            {
-                                if (res.moveToFirst())
-                                {
+                            Cursor res = tmp.InfoUsuario(ClssURL.getDIR_DB(),LoginActivity.this);
+                            if (res.getCount()!=0){
+                                if (res.moveToFirst()){
                                     editor.putString("usuario",res.getString(0).toString());
-
                                 }
                             }
                             editor.apply();
-
                             startActivity(new Intent(LoginActivity.this,MainActivity.class));
                             finish();
-                        }
-                        else
-                        {
-                            //showSnackBar();
+                        }else{
                             AsyncHttpClient servicio = new AsyncHttpClient();
-                            //AsyncHttpClient servicio = new AsyncHttpClient();
                             RequestParams parametros = new RequestParams();
                             parametros.put("V",txtUsurio.getText().toString());
                             parametros.put("P",txtPass.getText().toString());
-
-                            servicio.post(ClssURL.getURL_VENDEDOR(), parametros, new AsyncHttpResponseHandler()
-                            {
+                            servicio.post(ClssURL.getURL_VENDEDOR(), parametros, new AsyncHttpResponseHandler() {
                                 @Override
                                 public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
-                                    boolean ok = false;
                                     String Qry;
                                     if (statusCode==200)
                                     {
@@ -106,8 +87,8 @@ public class LoginActivity extends AppCompatActivity
                                             JSONObject jsonObject = new JSONObject(new String(responseBody));
 
                                             Qry = "INSERT INTO Usuarios (IdVendedor, NombreUsuario, Credencial, Password) VALUES("+jsonObject.get("VENDEDOR").toString()+", '"+jsonObject.get("NOMBRE").toString()+"', '"+txtUsurio.getText().toString()+"', '"+txtPass.getText().toString()+"')";
-                                            Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, LoginActivity.this,"DELETE FROM Usuarios;");
-                                            Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, LoginActivity.this, Qry);
+                                            Clientes.ExecuteSQL(ClssURL.getDIR_DB(), LoginActivity.this,"DELETE FROM Usuarios;");
+                                            Clientes.ExecuteSQL(ClssURL.getDIR_DB(), LoginActivity.this, Qry);
 
                                             checked = !checked;
                                             editor.putBoolean("pref", checked);
@@ -118,12 +99,9 @@ public class LoginActivity extends AppCompatActivity
                                             startActivity(new Intent(LoginActivity.this,MainActivity.class));
                                             finish();
 
-                                            //pdialog.dismiss();
-                                            //Toast.makeText(LoginActivity.this, "Todo Bien", Toast.LENGTH_SHORT).show();
-                                        }
-                                        catch (Exception e)
-                                        {
-                                            //e.printStackTrace();
+
+                                        }catch (Exception e){
+
                                             pdialog.dismiss();
                                             adapter2.notifyDataSetChanged();
                                             Error404("Error de Actualización de Datos de Puntos de Facturas.");
@@ -138,65 +116,10 @@ public class LoginActivity extends AppCompatActivity
                                 }
 
                                 @Override
-                                public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody, Throwable error)
-                                {
+                                public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody, Throwable error) {
                                     Error404("onFailure");
                                 }
-                                /*@Override
-                                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                    boolean ok = false;
-                                    String Vendedor, Nombre, Contrasenna, Qry;
-                                    if (statusCode==200)
-                                    {
-                                        try
-                                        {
-                                            JSONObject jsonObject = new JSONObject(new String(responseBody));
-
-                                            //Vendedor    = jsonObject.get("VENDEDOR").toString();
-                                            //Nombre      = jsonObject.get("NOMBRE").toString();
-                                            //Contrasenna = jsonObject.get("CONTRASENNA").toString();
-
-                                            Qry = "INSERT INTO Usuarios (IdVendedor, NombreUsuario, Credencial, Password) VALUES("+jsonObject.get("VENDEDOR").toString()+", '"+jsonObject.get("NOMBRE").toString()+"', '"+txtUsurio.getText().toString()+"', '"+txtPass.getText().toString()+"')";
-                                            Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, LoginActivity.this,"DELETE FROM Usuarios;");
-                                            Clientes.ExecuteSQL(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator, LoginActivity.this, Qry);
-
-                                            checked = !checked;
-                                            editor.putBoolean("pref", checked);
-                                            editor.putString("usuario",jsonObject.get("VENDEDOR").toString());
-                                            editor.commit();
-                                            editor.apply();
-
-                                            startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                                            finish();
-
-                                            //pdialog.dismiss();
-                                            //Toast.makeText(LoginActivity.this, "Todo Bien", Toast.LENGTH_SHORT).show();
-                                        }
-                                        catch (Exception e)
-                                        {
-                                            //e.printStackTrace();
-                                            pdialog.dismiss();
-                                            adapter2.notifyDataSetChanged();
-                                            Error404("Error de Actualización de Datos de Puntos de Facturas.");
-                                        }
-                                    }
-                                    else
-                                    {
-                                        pdialog.dismiss();
-                                        adapter2.notifyDataSetChanged();
-                                        Error404("Error de Actualización de Datos de Puntos de Facturas.");
-                                    }
-                                }
-                                */
-                                /*@Override
-                                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error)
-                                {
-                                    Error404("onFailure");
-                                }
-                                */
                             });
-                            //startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                            //finish();
                         }
                     }
                 }
@@ -206,15 +129,9 @@ public class LoginActivity extends AppCompatActivity
             finish();
         }
     }
-    private void showSnackBar() {Toast.makeText(this, "Usuario Incorrcto", Toast.LENGTH_SHORT).show(); }
-
-    public void Error404(String TipoError)
-    {
+    public void Error404(String TipoError){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(TipoError)
-                .setNegativeButton("OK",null)
-                .create()
-                .show();
+        builder.setMessage(TipoError).setNegativeButton("OK",null).create().show();
     }
 
 }
