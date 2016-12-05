@@ -20,6 +20,23 @@ public class Clientes
         cod = Codigo;
         Nombre = nombre;
     }
+
+    public Cursor CursorListadoClientes(String basedir, Context context)
+    {
+        SQLiteDatabase myDataBase = null;
+        SQLiteHelper myDbHelper = null;
+        Cursor res=null;
+        try
+        {
+            myDbHelper = new SQLiteHelper(basedir, context);
+            myDataBase = myDbHelper.getReadableDatabase();
+            String Query = "SELECT * FROM CLIENTES";
+            res = myDataBase.rawQuery(Query ,null);
+        }
+        catch (Exception e) { e.printStackTrace(); }
+        return res;
+    }
+
     public Clientes() { super(); }
     public String getNombre() { return Nombre; }
     public void setNombre(String nombre) { Nombre = nombre; }
@@ -52,7 +69,7 @@ public class Clientes
         {
             myDbHelper = new SQLiteHelper(basedir, context);
             myDataBase = myDbHelper.getReadableDatabase();
-            Cursor cursor = myDataBase.rawQuery("SELECT * FROM CLIENTES", null);
+            Cursor cursor = myDataBase.rawQuery("SELECT * FROM CLIENTES ORDER BY NOMBRE", null);
             if(cursor.getCount() > 0)
             {
                 cursor.moveToFirst();
