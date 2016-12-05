@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView android:id="@+id/LblCodigo"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:textSize="16px"
+        android:textStyle="bold"
+        android:paddingRight="10px"
+        android:text="Codigo"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+    <TextView android:id="@+id/LblNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="14px"
+        android:text="Nombre"
+        android:layout_below="@id/LblCodigo"
+    />
+    <TextView android:id="@+id/LblDireccion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="14px"
+        android:text="Direccion"
+        android:layout_below="@id/LblNombre"
+        />
+    <TextView android:id="@+id/LblTelefono1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="14px"
+        android:text="Telefono1"
+        android:layout_below="@id/LblDireccion"
+        />
+    <TextView android:id="@+id/LblEstado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="14px"
+        android:text="Estado"
+        android:layout_below="@id/LblTelefono1"
+        />
+
+</RelativeLayout>

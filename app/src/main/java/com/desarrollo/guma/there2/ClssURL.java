@@ -11,8 +11,8 @@ import java.io.File;
 public class ClssURL
 {
     //private static String SERVER = "192.168.1.78";
-    private static String SERVER = "165.98.75.219:8448";
-    //private static String SERVER = "192.168.1.155:8080";
+    //private static String SERVER = "165.98.75.219:8448";
+    private static String SERVER = "192.168.1.155:8080";
     private static String URL_CLENTES= "http://"+ SERVER +"/rest_ppts_uma/CLIENTES.php";
     private static String URL_VENDEDOR="http://"+ SERVER + "/rest_ppts_uma/VENDEDORES.php";
 

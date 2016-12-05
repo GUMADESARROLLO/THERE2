@@ -29,6 +29,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 
 import java.io.File;
@@ -100,11 +101,28 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
                     Clientes.ExecuteSQL(ClssURL.getDIR_DB(), cxnt,"DELETE FROM CLIENTES;");
                     Clientes.ExecuteSQL(ClssURL.getDIR_DB(), cxnt,"DELETE FROM DETALLE_FACTURA_PUNTOS;");
-
                     try{
                         JSONArray jsonArray = new JSONArray(new String(responseBody));
-                        Clientes.ExecuteSQL(ClssURL.getDIR_DB(), cxnt,jsonArray.getJSONObject(0).getString("CLIENTES"));
-                        Clientes.ExecuteSQL(ClssURL.getDIR_DB(), cxnt,jsonArray.getJSONObject(0).getString("FACTURAS"));
+                        JSONObject joClientes = (JSONObject) jsonArray.getJSONObject(0).get("CLIENTES");
+                        //JSONArray jsonArrayClientes = jsonObjectClientes.optJSONArray("CLIENTE");
+                        //Insertar los Clientes
+                        for (int i=0;i<joClientes.length()-1;i++)
+                        {
+                            //Clientes.ExecuteSQL(ClssURL.getDIR_DB(), cxnt,jsonArray.getJSONObject(0).getString("CLIENTES"+i));
+                            Clientes.ExecuteSQL(ClssURL.getDIR_DB(), cxnt,joClientes.getString("CLIENTES"+i));
+                        }
+
+                        //Clientes.ExecuteSQL(ClssURL.getDIR_DB(), cxnt,jsonArray.getJSONObject(0).getString("CLIENTES"));
+
+                        //Insertar las Facturas
+                        JSONObject joFacturas = (JSONObject) jsonArray.getJSONObject(0).get("FACTURAS");
+                        for (int j=0;j<joFacturas.length()-1;j++)
+                        {
+                            //Clientes.ExecuteSQL(ClssURL.getDIR_DB(), cxnt,jsonArray.getJSONObject(0).getString("CLIENTES"+i));
+                            Clientes.ExecuteSQL(ClssURL.getDIR_DB(), cxnt,joFacturas.getString("FACTURAS"+j));
+                        }
+
+                        //Clientes.ExecuteSQL(ClssURL.getDIR_DB(), cxnt,jsonArray.getJSONObject(0).getString("FACTURAS"));
                         pdialog.dismiss();
                         showSnackBar("Información Actualizada....");
                         adaptador = new SimpleAdapter(cxnt, objClientes.List(MainActivity.this));
@@ -125,11 +143,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
             }
 
-            @Override
-            public void onRetry(int retryNo) {
-                pdialog.dismiss();
-                //Error404("onRetry");
-            }
+
         });
 
     }
