@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                         JSONObject joClientes = (JSONObject) jsonArray.getJSONObject(0).get("CLIENTES");
                         //JSONArray jsonArrayClientes = jsonObjectClientes.optJSONArray("CLIENTE");
                         //Insertar los Clientes
-                        for (int i=0;i<joClientes.length()-1;i++)
+                        for (int i=0;i<joClientes.length();i++)
                         {
                             //Clientes.ExecuteSQL(ClssURL.getDIR_DB(), cxnt,jsonArray.getJSONObject(0).getString("CLIENTES"+i));
                             Clientes.ExecuteSQL(ClssURL.getDIR_DB(), cxnt,joClientes.getString("CLIENTES"+i));
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
                         //Insertar las Facturas
                         JSONObject joFacturas = (JSONObject) jsonArray.getJSONObject(0).get("FACTURAS");
-                        for (int j=0;j<joFacturas.length()-1;j++)
+                        for (int j=0;j<joFacturas.length();j++)
                         {
                             //Clientes.ExecuteSQL(ClssURL.getDIR_DB(), cxnt,jsonArray.getJSONObject(0).getString("CLIENTES"+i));
                             Clientes.ExecuteSQL(ClssURL.getDIR_DB(), cxnt,joFacturas.getString("FACTURAS"+j));
