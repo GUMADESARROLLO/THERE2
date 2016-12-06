@@ -32,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/blanco"
-                android:text="ccampos"
+                android:text="CCampos"
                 android:id="@+id/edtAgente"
                 android:textColorHint="@color/UmaText"
                 android:hint="@string/label_edt_login_agente"/>
@@ -44,7 +44,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="123456"
+                android:text="CC4185"
                 android:id="@+id/edtPass"
                 android:inputType="textPassword"
                 android:textColorHint="@color/UmaText"

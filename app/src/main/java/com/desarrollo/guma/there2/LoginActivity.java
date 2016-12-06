@@ -52,6 +52,13 @@ public class LoginActivity extends AppCompatActivity
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
         checked = preferences.getBoolean("pref", false);
+/*
+        editor.putBoolean("pref", true);
+        editor.putString("usuario","11");
+        editor.putString("perfil", "0");
+        editor.commit();
+        editor.apply();
+*/
 
         findViewById(R.id.btnOK).setOnClickListener
             (new View.OnClickListener()
