@@ -86,13 +86,14 @@ public class LoginActivity extends AppCompatActivity
                                         {
                                             JSONObject jsonObject = new JSONObject(new String(responseBody));
 
-                                            Qry = "INSERT INTO Usuarios (IdVendedor, NombreUsuario, Credencial, Password) VALUES("+jsonObject.get("VENDEDOR").toString()+", '"+jsonObject.get("NOMBRE").toString()+"', '"+txtUsurio.getText().toString()+"', '"+txtPass.getText().toString()+"')";
+                                            Qry = "INSERT INTO Usuarios (IdVendedor, NombreUsuario, Credencial, Password, PerfilSupervisor) VALUES("+jsonObject.get("VENDEDOR").toString()+", '"+jsonObject.get("NOMBRE").toString()+"', '"+txtUsurio.getText().toString()+"', '"+txtPass.getText().toString()+"', '"+jsonObject.get("PerfilSupervisor").toString()+"')";
                                             Clientes.ExecuteSQL(ClssURL.getDIR_DB(), LoginActivity.this,"DELETE FROM Usuarios;");
                                             Clientes.ExecuteSQL(ClssURL.getDIR_DB(), LoginActivity.this, Qry);
 
                                             checked = !checked;
                                             editor.putBoolean("pref", checked);
                                             editor.putString("usuario",jsonObject.get("VENDEDOR").toString());
+                                            editor.putString("perfil", jsonObject.get("PerfilSupervisor").toString());
                                             editor.commit();
                                             editor.apply();
 

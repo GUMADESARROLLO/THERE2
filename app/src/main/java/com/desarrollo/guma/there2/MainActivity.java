@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     String Vendedor;
+    String Perfil;
     ProgressDialog pdialog;
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         Vendedor = preferences.getString("usuario","11");
+        Perfil = preferences.getString("perfil","0");
         setTitle("LISTADO DE CLIENTE");
 
         editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
@@ -89,6 +91,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         AsyncHttpClient servicio = new AsyncHttpClient();
         RequestParams parametros = new RequestParams();
         parametros.put("V",User);
+        parametros.put("P",Perfil);
+
         servicio.get(ClssURL.getURL_CLENTES(), parametros,new AsyncHttpResponseHandler() {
             @Override
             public void onStart() {
