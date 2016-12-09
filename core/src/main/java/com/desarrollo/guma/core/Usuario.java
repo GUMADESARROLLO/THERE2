@@ -67,10 +67,10 @@ public class Usuario {
         try
         {
             String xxx = "";
-            xxx = encriptarEnMD5(PASSWORD);
+            //xxx = encriptarEnMD5(PASSWORD);
             myDbHelper = new SQLiteHelper(basedir, context);
             myDataBase = myDbHelper.getReadableDatabase();
-            Cursor cursor = myDataBase.rawQuery("select * from Usuarios where Credencial='"+Usuario+"' and PASSWORD='"+xxx+"' ", null);
+            Cursor cursor = myDataBase.rawQuery("select * from Usuarios where Credencial='"+Usuario+"' and PASSWORD='"+encriptarEnMD5(PASSWORD)+"' ", null);
             if(cursor.getCount() > 0)
             {
                 Correcto = true;
