@@ -1,6 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
+    <!--style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar"-->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Habilitar la Toolbar -->
         <item name="windowActionBar">false</item>
@@ -12,20 +13,20 @@
         <item name="colorAccent">@color/accentColor</item>
     </style>
 
-    <style name="AppTheme.TranslucentSystemBars" parent="AppTheme">
+    <style name="AppTheme.TranslucentSystemBars" parent="@style/AppTheme.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
 
     </style>
-    <style name="AppTheme.NoTitle">
+    <style name="AppTheme.NoTitle" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
     <style name="HeaderBar">
         <item name="android:background">?colorPrimary</item>
-        <item name="android:elevation">@dimen/headerbar_elevation</item>
     </style>
 
+    <!--style name="CustomActionBar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
     <style name="CustomActionBar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:windowActionBarOverlay">true</item>
         <!-- Support library compatibility -->

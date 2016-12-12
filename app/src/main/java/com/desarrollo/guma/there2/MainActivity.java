@@ -167,7 +167,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
     private void setToolbar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        if (toolbar != null)
+           { setSupportActionBar(toolbar); }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
